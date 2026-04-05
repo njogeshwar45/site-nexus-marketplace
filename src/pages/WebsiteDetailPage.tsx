@@ -64,7 +64,10 @@ export default function WebsiteDetailPage() {
     }
     setSubmitting(true);
     const { error } = await supabase.from('buy_requests').insert([{
-      ...result.data,
+      buyer_name: result.data.buyer_name,
+      buyer_email: result.data.buyer_email,
+      buyer_phone: result.data.buyer_phone || null,
+      message: result.data.message || null,
       website_id: id,
       status: 'new',
     }]);
