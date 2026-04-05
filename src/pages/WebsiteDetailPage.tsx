@@ -63,11 +63,11 @@ export default function WebsiteDetailPage() {
       return;
     }
     setSubmitting(true);
-    const { error } = await supabase.from('buy_requests').insert({
+    const { error } = await supabase.from('buy_requests').insert([{
       ...result.data,
       website_id: id,
       status: 'new',
-    });
+    }]);
     setSubmitting(false);
     if (error) { toast.error('Something went wrong'); return; }
     setSubmitted(true);
