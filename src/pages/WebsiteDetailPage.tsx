@@ -7,6 +7,7 @@ import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { ArrowLeft, ExternalLink, Check, Code, FileText, Headphones, Key } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { toast } from 'sonner';
 import { z } from 'zod';
 
@@ -94,6 +95,7 @@ export default function WebsiteDetailPage() {
           <div className="hidden md:flex items-center gap-6">
             <Link to="/" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Home</Link>
             <Link to="/marketplace" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Marketplace</Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
