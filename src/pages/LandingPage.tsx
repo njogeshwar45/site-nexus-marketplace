@@ -28,11 +28,9 @@ const TESTIMONIALS = [
   { name: 'Priya R.', role: 'Restaurant Owner', text: 'Our online reservations increased 300% after launching our NexusGrid website. Incredible value.' },
 ];
 
-const customEase = [0.22, 1, 0.36, 1] as const;
-
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i: number = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: customEase as unknown as string } }),
+  visible: (i: number = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const } }),
 };
 
 const staggerContainer = {
@@ -42,7 +40,7 @@ const staggerContainer = {
 
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.9 },
-  visible: (i: number = 0) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.15, duration: 0.5, ease: customEase as unknown as string } }),
+  visible: (i: number = 0) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" as const } }),
 };
 
 export default function LandingPage() {
