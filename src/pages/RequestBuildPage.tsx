@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
+import { motion } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -32,13 +33,10 @@ export default function RequestBuildPage() {
   });
 
   const set = (key: string, value: any) => setForm(f => ({ ...f, [key]: value }));
-
   const toggleType = (type: string) => {
     setForm(f => ({
       ...f,
-      website_types: f.website_types.includes(type)
-        ? f.website_types.filter(t => t !== type)
-        : [...f.website_types, type],
+      website_types: f.website_types.includes(type) ? f.website_types.filter(t => t !== type) : [...f.website_types, type],
     }));
   };
 
@@ -63,110 +61,120 @@ export default function RequestBuildPage() {
   if (submitted) {
     return (
       <div className="min-h-screen bg-background flex items-center justify-center">
-        <GlassCard hover={false} className="max-w-md mx-auto text-center">
-          <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4">
-            <Check className="h-8 w-8 text-secondary" />
-          </div>
-          <h2 className="font-display text-2xl font-bold mb-2">Project Brief Received!</h2>
-          <p className="text-muted-foreground text-sm mb-6">Expect a reply within 24 hours.</p>
-          <Link to="/"><Button variant="outline" className="glass border-glass-border">Back to Home</Button></Link>
-        </GlassCard>
+        <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1] }}>
+          <GlassCard hover={false} className="max-w-md mx-auto text-center">
+            <div className="w-16 h-16 rounded-full bg-secondary/20 flex items-center justify-center mx-auto mb-4">
+              <Check className="h-8 w-8 text-secondary" />
+            </div>
+            <h2 className="font-display text-2xl font-bold mb-2">Project Brief Received!</h2>
+            <p className="text-muted-foreground text-sm mb-6">Expect a reply within 24 hours.</p>
+            <Link to="/"><Button variant="outline" className="glass border-glass-border">Back to Home</Button></Link>
+          </GlassCard>
+        </motion.div>
       </div>
     );
   }
 
   return (
     <div className="min-h-screen bg-background">
-      <nav className="fixed top-0 w-full z-50 glass">
+      <motion.nav initial={{ y: -80, opacity: 0 }} animate={{ y: 0, opacity: 1 }} transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1] }} className="fixed top-0 w-full z-50 glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <Link to="/" className="font-display text-xl font-bold gradient-text">NexusGrid</Link>
           <ThemeToggle />
         </div>
-      </nav>
+      </motion.nav>
 
       <div className="max-w-2xl mx-auto px-4 pt-24 pb-16">
-        <Link to="/" className="inline-flex items-center text-muted-foreground hover:text-foreground text-sm mb-6">
-          <ArrowLeft className="h-4 w-4 mr-1" /> Back
-        </Link>
-        <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Commission a <span className="gradient-text">Custom Website</span></h1>
-        <p className="text-muted-foreground mb-8">Tell us what you need — we'll build it from scratch.</p>
+        <motion.div initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.4 }}>
+          <Link to="/" className="inline-flex items-center text-muted-foreground hover:text-foreground text-sm mb-6">
+            <ArrowLeft className="h-4 w-4 mr-1" /> Back
+          </Link>
+        </motion.div>
+        <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+          <h1 className="font-display text-3xl md:text-4xl font-bold mb-2">Commission a <span className="gradient-text">Custom Website</span></h1>
+          <p className="text-muted-foreground mb-8">Tell us what you need — we'll build it from scratch.</p>
+        </motion.div>
 
-        <GlassCard hover={false} className="space-y-5">
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div><Label className="text-sm mb-1.5 block">Full Name *</Label><Input value={form.full_name} onChange={e => set('full_name', e.target.value)} className="bg-muted/30 border-border" /></div>
-            <div><Label className="text-sm mb-1.5 block">Email *</Label><Input type="email" value={form.email} onChange={e => set('email', e.target.value)} className="bg-muted/30 border-border" /></div>
-          </div>
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div><Label className="text-sm mb-1.5 block">Phone</Label><Input value={form.phone} onChange={e => set('phone', e.target.value)} className="bg-muted/30 border-border" /></div>
-            <div><Label className="text-sm mb-1.5 block">Company / Brand</Label><Input value={form.company_name} onChange={e => set('company_name', e.target.value)} className="bg-muted/30 border-border" /></div>
-          </div>
-
-          <div>
-            <Label className="text-sm mb-2 block">Website Types Needed</Label>
-            <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
-              {WEBSITE_TYPES_BUILD.map(type => (
-                <div key={type} className="flex items-center gap-2">
-                  <Checkbox checked={form.website_types.includes(type)} onCheckedChange={() => toggleType(type)} id={`type-${type}`} />
-                  <Label htmlFor={`type-${type}`} className="text-sm">{type}</Label>
-                </div>
-              ))}
+        <motion.div initial={{ opacity: 0, y: 30 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6, delay: 0.15 }}>
+          <GlassCard hover={false} className="space-y-5">
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div><Label className="text-sm mb-1.5 block">Full Name *</Label><Input value={form.full_name} onChange={e => set('full_name', e.target.value)} className="bg-muted/30 border-border" /></div>
+              <div><Label className="text-sm mb-1.5 block">Email *</Label><Input type="email" value={form.email} onChange={e => set('email', e.target.value)} className="bg-muted/30 border-border" /></div>
             </div>
-          </div>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div><Label className="text-sm mb-1.5 block">Phone</Label><Input value={form.phone} onChange={e => set('phone', e.target.value)} className="bg-muted/30 border-border" /></div>
+              <div><Label className="text-sm mb-1.5 block">Company / Brand</Label><Input value={form.company_name} onChange={e => set('company_name', e.target.value)} className="bg-muted/30 border-border" /></div>
+            </div>
 
-          <div className="grid sm:grid-cols-2 gap-4">
             <div>
-              <Label className="text-sm mb-1.5 block">Tech Preference</Label>
-              <Select value={form.tech_preference} onValueChange={v => set('tech_preference', v)}>
-                <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
-                <SelectContent>
-                  {['React', 'Next.js', 'WordPress', 'No preference', 'Let the team decide'].map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
-                </SelectContent>
-              </Select>
+              <Label className="text-sm mb-2 block">Website Types Needed</Label>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-2">
+                {WEBSITE_TYPES_BUILD.map(type => (
+                  <div key={type} className="flex items-center gap-2">
+                    <Checkbox checked={form.website_types.includes(type)} onCheckedChange={() => toggleType(type)} id={`type-${type}`} />
+                    <Label htmlFor={`type-${type}`} className="text-sm">{type}</Label>
+                  </div>
+                ))}
+              </div>
             </div>
+
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <Label className="text-sm mb-1.5 block">Tech Preference</Label>
+                <Select value={form.tech_preference} onValueChange={v => set('tech_preference', v)}>
+                  <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectContent>
+                    {['React', 'Next.js', 'WordPress', 'No preference', 'Let the team decide'].map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-sm mb-1.5 block">Design Style</Label>
+                <Select value={form.design_style} onValueChange={v => set('design_style', v)}>
+                  <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectContent>{DESIGN_STYLES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            <div><Label className="text-sm mb-1.5 block">Key Features Needed</Label><Textarea value={form.key_features} onChange={e => set('key_features', e.target.value)} className="bg-muted/30 border-border" placeholder="Login system, payment gateway, admin dashboard..." rows={3} /></div>
+
             <div>
-              <Label className="text-sm mb-1.5 block">Design Style</Label>
-              <Select value={form.design_style} onValueChange={v => set('design_style', v)}>
-                <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
-                <SelectContent>{DESIGN_STYLES.map(s => <SelectItem key={s} value={s}>{s}</SelectItem>)}</SelectContent>
-              </Select>
+              <Label className="text-sm mb-2 block">Do you have a design/mockup?</Label>
+              <RadioGroup value={form.has_mockup ? 'yes' : 'no'} onValueChange={v => set('has_mockup', v === 'yes')} className="flex gap-6">
+                <div className="flex items-center gap-2"><RadioGroupItem value="yes" id="mockup-yes" /><Label htmlFor="mockup-yes" className="text-sm">Yes</Label></div>
+                <div className="flex items-center gap-2"><RadioGroupItem value="no" id="mockup-no" /><Label htmlFor="mockup-no" className="text-sm">No</Label></div>
+              </RadioGroup>
             </div>
-          </div>
 
-          <div><Label className="text-sm mb-1.5 block">Key Features Needed</Label><Textarea value={form.key_features} onChange={e => set('key_features', e.target.value)} className="bg-muted/30 border-border" placeholder="Login system, payment gateway, admin dashboard..." rows={3} /></div>
+            <div><Label className="text-sm mb-1.5 block">Reference Websites</Label><Textarea value={form.reference_urls} onChange={e => set('reference_urls', e.target.value)} className="bg-muted/30 border-border" placeholder="Links to sites you like..." rows={2} /></div>
 
-          <div>
-            <Label className="text-sm mb-2 block">Do you have a design/mockup?</Label>
-            <RadioGroup value={form.has_mockup ? 'yes' : 'no'} onValueChange={v => set('has_mockup', v === 'yes')} className="flex gap-6">
-              <div className="flex items-center gap-2"><RadioGroupItem value="yes" id="mockup-yes" /><Label htmlFor="mockup-yes" className="text-sm">Yes</Label></div>
-              <div className="flex items-center gap-2"><RadioGroupItem value="no" id="mockup-no" /><Label htmlFor="mockup-no" className="text-sm">No</Label></div>
-            </RadioGroup>
-          </div>
-
-          <div><Label className="text-sm mb-1.5 block">Reference Websites</Label><Textarea value={form.reference_urls} onChange={e => set('reference_urls', e.target.value)} className="bg-muted/30 border-border" placeholder="Links to sites you like..." rows={2} /></div>
-
-          <div className="grid sm:grid-cols-2 gap-4">
-            <div>
-              <Label className="text-sm mb-1.5 block">Budget Range</Label>
-              <Select value={form.budget_range} onValueChange={v => set('budget_range', v)}>
-                <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
-                <SelectContent>{BUDGET_RANGES_BUILD.map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)}</SelectContent>
-              </Select>
+            <div className="grid sm:grid-cols-2 gap-4">
+              <div>
+                <Label className="text-sm mb-1.5 block">Budget Range</Label>
+                <Select value={form.budget_range} onValueChange={v => set('budget_range', v)}>
+                  <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectContent>{BUDGET_RANGES_BUILD.map(b => <SelectItem key={b} value={b}>{b}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label className="text-sm mb-1.5 block">Timeline</Label>
+                <Select value={form.timeline} onValueChange={v => set('timeline', v)}>
+                  <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
+                  <SelectContent>{TIMELINES_BUILD.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
+                </Select>
+              </div>
             </div>
-            <div>
-              <Label className="text-sm mb-1.5 block">Timeline</Label>
-              <Select value={form.timeline} onValueChange={v => set('timeline', v)}>
-                <SelectTrigger className="bg-muted/30 border-border"><SelectValue placeholder="Select" /></SelectTrigger>
-                <SelectContent>{TIMELINES_BUILD.map(t => <SelectItem key={t} value={t}>{t}</SelectItem>)}</SelectContent>
-              </Select>
-            </div>
-          </div>
 
-          <div><Label className="text-sm mb-1.5 block">Additional Notes</Label><Textarea value={form.additional_notes} onChange={e => set('additional_notes', e.target.value)} className="bg-muted/30 border-border" rows={3} /></div>
+            <div><Label className="text-sm mb-1.5 block">Additional Notes</Label><Textarea value={form.additional_notes} onChange={e => set('additional_notes', e.target.value)} className="bg-muted/30 border-border" rows={3} /></div>
 
-          <Button className="gradient-btn text-primary-foreground w-full py-5 rounded-xl border-0 text-base" onClick={handleSubmit} disabled={submitting}>
-            {submitting ? 'Submitting...' : 'Submit Project Brief'}
-          </Button>
-        </GlassCard>
+            <motion.div whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.97 }}>
+              <Button className="gradient-btn text-primary-foreground w-full py-5 rounded-xl border-0 text-base" onClick={handleSubmit} disabled={submitting}>
+                {submitting ? 'Submitting...' : 'Submit Project Brief'}
+              </Button>
+            </motion.div>
+          </GlassCard>
+        </motion.div>
       </div>
     </div>
   );
