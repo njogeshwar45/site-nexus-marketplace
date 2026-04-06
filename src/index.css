@@ -6,7 +6,51 @@
 
 @layer base {
   :root {
-    /* Public dark theme (default) */
+    /* Public light theme (default) */
+    --background: 0 0% 100%;
+    --foreground: 222 47% 11%;
+    --card: 0 0% 100%;
+    --card-foreground: 222 47% 11%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222 47% 11%;
+    --primary: 263 70% 58%;
+    --primary-foreground: 0 0% 100%;
+    --secondary: 187 92% 43%;
+    --secondary-foreground: 0 0% 100%;
+    --muted: 210 40% 96%;
+    --muted-foreground: 215 16% 47%;
+    --accent: 263 90% 96%;
+    --accent-foreground: 263 70% 50%;
+    --destructive: 0 84% 60%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 214 32% 91%;
+    --input: 214 32% 91%;
+    --ring: 263 70% 58%;
+    --radius: 0.75rem;
+
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222 47% 11%;
+    --sidebar-primary: 263 70% 50%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 263 90% 96%;
+    --sidebar-accent-foreground: 263 70% 50%;
+    --sidebar-border: 214 32% 91%;
+    --sidebar-ring: 263 70% 58%;
+
+    /* Custom tokens — light */
+    --space-deep: 210 40% 96%;
+    --space-navy: 210 40% 98%;
+    --violet-glow: 263 70% 58%;
+    --cyan-glow: 187 92% 43%;
+    --glass-bg: 0 0% 100%;
+    --glass-border: 214 32% 91%;
+    --text-soft: 215 16% 47%;
+
+    font-family: 'Inter', sans-serif;
+  }
+
+  /* Public dark theme */
+  .dark {
     --background: 222 47% 5%;
     --foreground: 0 0% 100%;
     --card: 222 47% 8%;
@@ -26,18 +70,17 @@
     --border: 263 30% 25%;
     --input: 222 30% 18%;
     --ring: 263 70% 58%;
-    --radius: 0.75rem;
 
-    --sidebar-background: 0 0% 100%;
-    --sidebar-foreground: 222 47% 11%;
+    --sidebar-background: 222 47% 8%;
+    --sidebar-foreground: 0 0% 100%;
     --sidebar-primary: 263 70% 50%;
     --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 263 90% 96%;
-    --sidebar-accent-foreground: 263 70% 50%;
-    --sidebar-border: 214 32% 91%;
+    --sidebar-accent: 222 30% 12%;
+    --sidebar-accent-foreground: 0 0% 100%;
+    --sidebar-border: 263 30% 25%;
     --sidebar-ring: 263 70% 58%;
 
-    /* Custom tokens */
+    /* Custom tokens — dark */
     --space-deep: 222 60% 6%;
     --space-navy: 222 47% 8%;
     --violet-glow: 263 70% 58%;
@@ -45,8 +88,6 @@
     --glass-bg: 222 47% 11%;
     --glass-border: 263 30% 30%;
     --text-soft: 215 25% 67%;
-
-    font-family: 'Inter', sans-serif;
   }
 
   /* Admin light theme */
@@ -87,25 +128,35 @@
   font-family: 'Space Grotesk', sans-serif;
 }
 
-/* Glassmorphism */
+/* Glassmorphism — adapts to theme */
 .glass {
-  background: hsla(222, 47%, 11%, 0.6);
+  background: hsl(var(--glass-bg) / 0.6);
   backdrop-filter: blur(16px);
   -webkit-backdrop-filter: blur(16px);
+  border: 1px solid hsl(var(--glass-border) / 0.3);
+}
+
+.dark .glass {
+  background: hsla(222, 47%, 11%, 0.6);
   border: 1px solid hsla(263, 30%, 40%, 0.3);
 }
 
 .glass-card {
-  background: hsla(222, 47%, 11%, 0.4);
+  background: hsl(var(--card) / 0.8);
   backdrop-filter: blur(20px);
   -webkit-backdrop-filter: blur(20px);
-  border: 1px solid hsla(263, 30%, 40%, 0.2);
+  border: 1px solid hsl(var(--border));
   transition: all 0.3s ease;
 }
 
+.dark .glass-card {
+  background: hsla(222, 47%, 11%, 0.4);
+  border: 1px solid hsla(263, 30%, 40%, 0.2);
+}
+
 .glass-card:hover {
-  border-color: hsla(263, 70%, 58%, 0.5);
-  box-shadow: 0 0 30px hsla(263, 70%, 58%, 0.15);
+  border-color: hsl(var(--primary) / 0.5);
+  box-shadow: 0 0 30px hsl(var(--primary) / 0.15);
   transform: translateY(-4px);
 }
 
@@ -143,9 +194,9 @@
 /* Animated gradient mesh */
 .gradient-mesh {
   background: 
-    radial-gradient(ellipse at 20% 50%, hsla(263, 70%, 58%, 0.15) 0%, transparent 50%),
-    radial-gradient(ellipse at 80% 20%, hsla(187, 92%, 43%, 0.1) 0%, transparent 50%),
-    radial-gradient(ellipse at 40% 80%, hsla(263, 70%, 58%, 0.08) 0%, transparent 50%);
+    radial-gradient(ellipse at 20% 50%, hsl(var(--primary) / 0.15) 0%, transparent 50%),
+    radial-gradient(ellipse at 80% 20%, hsl(var(--secondary) / 0.1) 0%, transparent 50%),
+    radial-gradient(ellipse at 40% 80%, hsl(var(--primary) / 0.08) 0%, transparent 50%);
   animation: meshMove 20s ease-in-out infinite;
 }
 
@@ -158,7 +209,7 @@
 /* Glow divider */
 .glow-divider {
   height: 1px;
-  background: linear-gradient(90deg, transparent, hsl(263, 70%, 58%), transparent);
+  background: linear-gradient(90deg, transparent, hsl(var(--primary)), transparent);
 }
 
 /* Fade in animation */
