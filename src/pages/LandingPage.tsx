@@ -30,7 +30,7 @@ const TESTIMONIALS = [
 
 const fadeUp = {
   hidden: { opacity: 0, y: 30 },
-  visible: (i: number = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6, ease: "easeOut" as const } }),
+  visible: (i: number = 0) => ({ opacity: 1, y: 0, transition: { delay: i * 0.1, duration: 0.6 } }),
 };
 
 const staggerContainer = {
@@ -40,7 +40,7 @@ const staggerContainer = {
 
 const scaleIn = {
   hidden: { opacity: 0, scale: 0.9 },
-  visible: (i: number = 0) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.15, duration: 0.5, ease: "easeOut" as const } }),
+  visible: (i: number = 0) => ({ opacity: 1, scale: 1, transition: { delay: i * 0.15, duration: 0.5 } }),
 };
 
 export default function LandingPage() {
