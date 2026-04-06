@@ -9,6 +9,7 @@ import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group';
 import { Label } from '@/components/ui/label';
 import { GlassCard } from '@/components/GlassCard';
 import { Check, ArrowLeft } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { toast } from 'sonner';
 import { z } from 'zod';
 import { BUDGET_RANGES_DEPLOY, TIMELINES_DEPLOY, HOSTING_OPTIONS } from '@/lib/constants';
@@ -71,6 +72,7 @@ export default function RequestDeployPage() {
       <nav className="fixed top-0 w-full z-50 glass">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex items-center justify-between h-16">
           <Link to="/" className="font-display text-xl font-bold gradient-text">NexusGrid</Link>
+          <ThemeToggle />
         </div>
       </nav>
 

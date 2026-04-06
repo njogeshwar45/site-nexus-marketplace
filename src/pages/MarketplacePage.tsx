@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select';
 import { Search, ExternalLink, X } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 import { CATEGORIES } from '@/lib/constants';
 
 interface Website {
@@ -80,6 +81,7 @@ export default function MarketplacePage() {
             <Link to="/marketplace" className="text-foreground font-medium text-sm">Marketplace</Link>
             <Link to="/request-deploy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Deploy</Link>
             <Link to="/request-build" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Custom Build</Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>

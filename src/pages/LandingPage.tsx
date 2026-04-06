@@ -5,6 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
 import { Progress } from '@/components/ui/progress';
 import { ArrowRight, Zap, Shield, Clock, Star, ChevronRight } from 'lucide-react';
+import { ThemeToggle } from '@/components/ThemeToggle';
 
 const QUIZ_STEPS = [
   {
@@ -68,6 +69,7 @@ export default function LandingPage() {
             <Link to="/request-deploy" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Deploy</Link>
             <Link to="/request-build" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Custom Build</Link>
             <Link to="/admin" className="text-muted-foreground hover:text-foreground transition-colors text-sm">Admin</Link>
+            <ThemeToggle />
           </div>
         </div>
       </nav>
