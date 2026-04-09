@@ -19,6 +19,7 @@ import DeployRequestsPage from "./pages/admin/DeployRequestsPage";
 import BuildRequestsPage from "./pages/admin/BuildRequestsPage";
 import SettingsPage from "./pages/admin/SettingsPage";
 import NotFound from "./pages/NotFound";
+import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
 
@@ -29,25 +30,27 @@ const App = () => (
         <AuthProvider>
           <Toaster />
           <Sonner />
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<LandingPage />} />
-            <Route path="/marketplace" element={<MarketplacePage />} />
-            <Route path="/website/:id" element={<WebsiteDetailPage />} />
-            <Route path="/request-deploy" element={<RequestDeployPage />} />
-            <Route path="/request-build" element={<RequestBuildPage />} />
-            <Route path="/admin" element={<AdminLoginPage />} />
-            <Route path="/admin" element={<AdminLayout />}>
-              <Route path="dashboard" element={<DashboardPage />} />
-              <Route path="listings" element={<ListingsPage />} />
-              <Route path="buy-requests" element={<BuyRequestsPage />} />
-              <Route path="deploy-requests" element={<DeployRequestsPage />} />
-              <Route path="build-requests" element={<BuildRequestsPage />} />
-              <Route path="settings" element={<SettingsPage />} />
-            </Route>
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </BrowserRouter>
+          <BrowserRouter>
+            <ScrollToTop />
+            <Routes>
+              <Route path="/" element={<LandingPage />} />
+              <Route path="/marketplace" element={<MarketplacePage />} />
+              <Route path="/website/:id" element={<WebsiteDetailPage />} />
+              <Route path="/request-deploy" element={<RequestDeployPage />} />
+              <Route path="/request-build" element={<RequestBuildPage />} />
+              <Route path="/admin/login" element={<AdminLoginPage />} />
+              <Route path="/admin" element={<AdminLayout />}>
+                <Route index element={<DashboardPage />} />
+                <Route path="dashboard" element={<DashboardPage />} />
+                <Route path="listings" element={<ListingsPage />} />
+                <Route path="buy-requests" element={<BuyRequestsPage />} />
+                <Route path="deploy-requests" element={<DeployRequestsPage />} />
+                <Route path="build-requests" element={<BuildRequestsPage />} />
+                <Route path="settings" element={<SettingsPage />} />
+              </Route>
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </BrowserRouter>
         </AuthProvider>
       </ThemeProvider>
     </TooltipProvider>

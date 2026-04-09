@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useCallback } from 'react';
 import { supabase } from '@/integrations/supabase/client';
+import { useRealtimeWebsites } from '@/hooks/useRealtimeWebsites';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -37,13 +38,14 @@ export default function ListingsPage() {
   const [tagsInput, setTagsInput] = useState('');
   const [featuresInput, setFeaturesInput] = useState('');
 
-  useEffect(() => { fetch(); }, []);
-
-  const fetch = async () => {
+  const fetchData = useCallback(async () => {
     const { data } = await supabase.from('websites').select('*').order('created_at', { ascending: false });
     setWebsites((data as Website[]) || []);
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+  useRealtimeWebsites(fetchData);
 
   const openNew = () => {
     setEditing(null);
@@ -83,20 +85,20 @@ export default function ListingsPage() {
       toast.success('Created');
     }
     setDialogOpen(false);
-    fetch();
+    fetchData();
   };
 
   const handleDelete = async (id: string) => {
     const { error } = await supabase.from('websites').delete().eq('id', id);
     if (error) { toast.error('Failed to delete'); return; }
     toast.success('Deleted');
-    fetch();
+    fetchData();
   };
 
   const toggleStatus = async (w: Website) => {
     const newStatus = w.status === 'available' ? 'sold' : 'available';
     await supabase.from('websites').update({ status: newStatus }).eq('id', w.id);
-    fetch();
+    fetchData();
   };
 
   return (

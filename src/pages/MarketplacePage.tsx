@@ -1,7 +1,8 @@
-import { useState, useEffect, useMemo } from 'react';
+import { useState, useEffect, useMemo, useCallback } from 'react';
 import { Link } from 'react-router-dom';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from '@/integrations/supabase/client';
+import { useRealtimeWebsites } from '@/hooks/useRealtimeWebsites';
 import { GlassCard } from '@/components/GlassCard';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
@@ -39,17 +40,19 @@ export default function MarketplacePage() {
   const [priceRange, setPriceRange] = useState('all');
   const [quizPrefs, setQuizPrefs] = useState<string[] | null>(null);
 
+  const fetchWebsites = useCallback(async () => {
+    const { data } = await supabase.from('websites').select('*').eq('status', 'available');
+    setWebsites((data as Website[]) || []);
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
     const stored = localStorage.getItem('nexusgrid_quiz');
     if (stored) setQuizPrefs(JSON.parse(stored));
     fetchWebsites();
-  }, []);
+  }, [fetchWebsites]);
 
-  const fetchWebsites = async () => {
-    const { data } = await supabase.from('websites').select('*').eq('status', 'available');
-    setWebsites((data as Website[]) || []);
-    setLoading(false);
-  };
+  useRealtimeWebsites(fetchWebsites);
 
   const filtered = useMemo(() => {
     let results = websites;
