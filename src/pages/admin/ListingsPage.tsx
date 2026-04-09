@@ -85,20 +85,20 @@ export default function ListingsPage() {
       toast.success('Created');
     }
     setDialogOpen(false);
-    fetch();
+    fetchData();
   };
 
   const handleDelete = async (id: string) => {
     const { error } = await supabase.from('websites').delete().eq('id', id);
     if (error) { toast.error('Failed to delete'); return; }
     toast.success('Deleted');
-    fetch();
+    fetchData();
   };
 
   const toggleStatus = async (w: Website) => {
     const newStatus = w.status === 'available' ? 'sold' : 'available';
     await supabase.from('websites').update({ status: newStatus }).eq('id', w.id);
-    fetch();
+    fetchData();
   };
 
   return (
