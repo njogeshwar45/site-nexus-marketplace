@@ -40,17 +40,19 @@ export default function MarketplacePage() {
   const [priceRange, setPriceRange] = useState('all');
   const [quizPrefs, setQuizPrefs] = useState<string[] | null>(null);
 
+  const fetchWebsites = useCallback(async () => {
+    const { data } = await supabase.from('websites').select('*').eq('status', 'available');
+    setWebsites((data as Website[]) || []);
+    setLoading(false);
+  }, []);
+
   useEffect(() => {
     const stored = localStorage.getItem('nexusgrid_quiz');
     if (stored) setQuizPrefs(JSON.parse(stored));
     fetchWebsites();
-  }, []);
+  }, [fetchWebsites]);
 
-  const fetchWebsites = async () => {
-    const { data } = await supabase.from('websites').select('*').eq('status', 'available');
-    setWebsites((data as Website[]) || []);
-    setLoading(false);
-  };
+  useRealtimeWebsites(fetchWebsites);
 
   const filtered = useMemo(() => {
     let results = websites;
