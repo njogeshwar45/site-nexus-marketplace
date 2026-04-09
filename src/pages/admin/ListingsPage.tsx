@@ -38,13 +38,14 @@ export default function ListingsPage() {
   const [tagsInput, setTagsInput] = useState('');
   const [featuresInput, setFeaturesInput] = useState('');
 
-  useEffect(() => { fetch(); }, []);
-
-  const fetch = async () => {
+  const fetchData = useCallback(async () => {
     const { data } = await supabase.from('websites').select('*').order('created_at', { ascending: false });
     setWebsites((data as Website[]) || []);
     setLoading(false);
-  };
+  }, []);
+
+  useEffect(() => { fetchData(); }, [fetchData]);
+  useRealtimeWebsites(fetchData);
 
   const openNew = () => {
     setEditing(null);
